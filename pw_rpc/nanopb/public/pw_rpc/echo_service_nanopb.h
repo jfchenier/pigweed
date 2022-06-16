@@ -28,4 +28,15 @@ class EchoService final
   }
 };
 
+class ByteService : public pw_rpc::nanopb::ByteService::Service<ByteService> {
+ public:
+  void Send(ServerReader<::pw_rpc_ByteMessage, ::pw_rpc_ByteStatus>& reader);
+
+  void Receive(const ::pw_rpc_ByteStatus& request,
+               ServerWriter<::pw_rpc_ByteMessage>& writer);
+
+ private:
+  ServerReader<::pw_rpc_ByteMessage, ::pw_rpc_ByteStatus> reader_;
+};
+
 }  // namespace pw::rpc

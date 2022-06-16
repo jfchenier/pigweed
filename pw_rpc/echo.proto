@@ -24,3 +24,16 @@ service EchoService {
 message EchoMessage {
   string msg = 1;
 }
+
+service ByteService {
+  rpc Send(stream ByteMessage) returns (ByteStatus) {}
+  rpc Receive(ByteStatus) returns (stream ByteMessage) {}
+}
+
+message ByteMessage {
+  bytes msg = 1;
+}
+
+message ByteStatus {
+  uint32 status = 1;
+}

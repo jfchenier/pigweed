@@ -40,7 +40,7 @@
 // as an RPC request or response. The buffer can be stack or globally allocated
 // (see PW_RPC_NANOPB_STRUCT_BUFFER_STACK_ALLOCATE).
 #ifndef PW_RPC_NANOPB_STRUCT_MIN_BUFFER_SIZE
-#define PW_RPC_NANOPB_STRUCT_MIN_BUFFER_SIZE 64
+#define PW_RPC_NANOPB_STRUCT_MIN_BUFFER_SIZE 256
 #endif  // PW_RPC_NANOPB_STRUCT_MIN_BUFFER_SIZE
 
 // Enable global synchronization for RPC calls. If this is set, a backend must

@@ -25,6 +25,11 @@ from pw_hdlc.rpc import HdlcRpcClient, default_channels
 # Point the script to the .proto file with our RPC services.
 PROTO = Path(os.environ['PW_ROOT'], 'pw_rpc/echo.proto')
 
+def on_next(call_object, response):
+    pass
+
+def on_completed(call_object, status):
+    pass
 
 def script(device: str, baud: int) -> None:
     # Set up a pw_rpc client that uses HDLC.
@@ -34,21 +39,18 @@ def script(device: str, baud: int) -> None:
     )
 
     # Make a shortcut to the EchoService.
-    echo_service = client.rpcs().pw.rpc.EchoService
+    echo_service = client.rpcs().pw.rpc.ByteService
 
-    # Call some RPCs and check the results.
-    status, payload = echo_service.Echo(msg='Hello')
+    iteration = 10000000
 
-    if status.ok():
-        print('The status was', status)
-        print('The payload was', payload)
-    else:
-        print('Uh oh, this RPC returned', status)
+    rpc = echo_service.Receive
+    #use input status to tell the server how many itertation we want to receive on the stream.
+    input_status = iteration
 
-    status, payload = echo_service.Echo(msg='Goodbye!')
+    call = rpc.invoke(rpc.request(status=input_status), on_next, on_completed)
+    responses = call.get_responses()
 
-    print('The device says:', payload.msg)
-
+    call.wait()
 
 def main():
     parser = argparse.ArgumentParser(

@@ -12,4 +12,5 @@
 // License for the specific language governing permissions and limitations under
 // the License.
 
-pw.rpc.EchoMessage.msg max_size:64
+pw.rpc.EchoMessage.msg max_size:256
+pw.rpc.ByteMessage.msg max_size:256
